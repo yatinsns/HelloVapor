@@ -35,7 +35,14 @@ public func routes(_ router: Router) throws {
 
   router.get("user") { req -> User in
     return User(name: "Yatin Sarbalia", email: "yatinsns@gmail.com")
+  }
 
+  router.get("future") { req -> Future<String> in
+    return test(str: "Hello Yatin Sarbalia", for: req).transform(to: "World Yatin Sarbalia")
+  }
+
+  func test(str: String, for request: Request) -> Future<String> {
+    return request.future(str)
   }
 }
 
