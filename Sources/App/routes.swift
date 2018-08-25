@@ -21,6 +21,10 @@ public func routes(_ router: Router) throws {
   router.post("todos", use: todoController.create)
   router.delete("todos", Todo.parameter, use: todoController.delete)
 
+  router.post(LoginRequest.self, at: "loginNew") { req, data -> LoginResponse in
+    return LoginResponse(request: data)
+  }
+
   router.post("login") { req -> Future<HTTPStatus> in
     return try req.content.decode(LoginRequest.self).map(to: HTTPStatus.self) { loginRequest in
       print(loginRequest.email)
@@ -33,4 +37,8 @@ public func routes(_ router: Router) throws {
     return User(name: "Yatin Sarbalia", email: "yatinsns@gmail.com")
 
   }
+}
+
+struct LoginResponse: Content {
+  let request: LoginRequest
 }
